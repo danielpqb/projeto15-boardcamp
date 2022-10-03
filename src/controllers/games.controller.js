@@ -1,4 +1,4 @@
-import connection from "../database/database.js";
+import { connection } from "../database/database.js";
 import joi from "joi";
 
 async function getGames(req, res) {

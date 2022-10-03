@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
-import connection from "../database/database.js";
+import { connection } from "../database/database.js";
 import joi from "joi";
-import joiDate from "@joi/date";
 
 async function getRentals(req, res) {
   const { customerId, gameId } = req.query;

@@ -1,4 +1,4 @@
-import { connection } from "../db/database.js";
+import { connection } from "../database/database.js";
 import joi from "joi";
 import joiDate from "@joi/date";
 
