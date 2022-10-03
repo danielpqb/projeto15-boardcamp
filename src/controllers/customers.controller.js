@@ -6,11 +6,18 @@ async function getCustomers(req, res) {
   const { cpf } = req.query;
 
   try {
-    const customers = await connection.query(
-      `SELECT * FROM customers
-            WHERE cpf LIKE $1;`,
-      [`${cpf}%`]
-    );
+    if (cpf) {
+      const customers = await connection.query(
+        `SELECT * FROM customers
+        WHERE cpf LIKE $1;`,
+        [`${cpf}%`]
+      );
+      res.send(customers.rows);
+      return;
+    }
+
+    const customers = await connection.query(`SELECT * FROM customers;`);
+
     res.send(customers.rows);
   } catch (error) {
     res.status(500).send(error);
