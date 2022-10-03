@@ -1,4 +1,6 @@
 import { connection } from "../db/database.js";
+import joi from "joi";
+import joiDate from "@joi/date";
 
 async function getCustomers(req, res) {
   const { cpf } = req.query;
@@ -36,6 +38,18 @@ async function getCustomerById(req, res) {
 }
 
 async function createCustomer(req, res) {
+  const customerSchema = joi.object({
+    name: joi.string().required(),
+    phone: joi
+      .string()
+      .pattern(/^[0-9]?[0-9]{10}$/)
+      .required(),
+    cpf: joi
+      .string()
+      .pattern(/^[0-9]{11}$/)
+      .required(),
+    birthday: joi.extend(joiDate).date().format("YYYY-MM-DD").required(),
+  });
   const validation = customerSchema.validate(req.body, { abortEarly: false });
   if (validation.error) {
     const errors = validation.error.details.map((v) => v.message);
